@@ -11,11 +11,13 @@ var App = function($el){
     'submit', this.submit.bind(this)
   );
 
-  if (this.dob) {
-    this.renderAgeLoop();
-  } else {
-    this.renderChoose();
-  }
+  this.renderAgeLoop();
+
+  // if (this.dob) {
+  //   this.renderAgeLoop();
+  // } else {
+  //   this.renderChoose();
+  // }
 };
 
 App.fn = App.prototype;
@@ -23,10 +25,12 @@ App.fn = App.prototype;
 App.fn.load = function(){
   var value;
 
-  if (value = localStorage.dob) {
-    this.dob = new Date(parseInt(value));
-    this.dob.setTime(this.dob.getTime() + 1000 * 60 * this.dob.getTimezoneOffset());
-  }
+  this.dob = new Date("July 20, 1995 02:00:00");
+
+  // if (value = localStorage.dob) {
+  //   this.dob = new Date(parseInt(value));
+  //   this.dob.setTime(this.dob.getTime() + 1000 * 60 * this.dob.getTimezoneOffset());
+  // }
 };
 
 App.fn.save = function(){
