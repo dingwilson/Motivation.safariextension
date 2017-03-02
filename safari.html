@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+   <script type="text/javascript" src="app/app.js"></script>
+   <script type="text/javascript">
+
+    var beforeNavigateHandled = false;
+
+    function handleOpen(e) {
+
+      var tab = null
+
+      if (e.target instanceof SafariBrowserTab) {
+        tab = e.target;
+      } else if (e.target instanceof SafariBrowserWindow) {
+        tab = e.target.activeTab;
+      }
+
+      if (tab !== null) {
+        // Handle before load to override favourites/bookmarks page
+        tab.addEventListener('beforeNavigate', handleBeforeNavigate, true);
+        setTimeout(function () {
+          // If the event doesn't fire nothing is loading which means the user selected empty page
+          // on new tab (ideal) so we override
+          if (beforeNavigateHandled === false) {
+            tab.url = safari.extension.baseURI + 'dashboard.html';
+            // safari.application.activeBrowserWindow.activeTab.url = safari.extension.baseURI + 'dashboard.html';
+            tab.removeEventListener('beforeNavigate', handleBeforeNavigate, true);
+          }
+        }, 150);
+      }
+    }
+
+    function handleBeforeNavigate(e) {
+      beforeNavigateHandled = true;
+      if (e.url === null) {
+        // Override new tab page
+        e.preventDefault();
+        e.target.url = safari.extension.baseURI + 'dashboard.html';
+        e.target.removeEventListener('beforeNavigate', handleBeforeNavigate, true);
+      }
+    }
+
+    safari.application.addEventListener("open", handleOpen, true);
+
+   </script>
+  </head>
+<body></body>
+</html>

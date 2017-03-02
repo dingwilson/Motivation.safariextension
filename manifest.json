@@ -1,0 +1,23 @@
+{
+    "manifest_version": 1,
+    "name": "Motivation",
+    "version": "1.0",
+    "description": "New Safari tab page showing your age",
+    "icons": {
+        "32": "Icon-32.png",
+        "48": "Icon-48.png",
+        "64": "Icon-64.png"
+    },
+    "background": {
+        "scripts": ["motivation.js"],
+        "persistent": false
+    },
+    "chrome_url_overrides": {
+        "newtab": "dashboard.html"
+    },
+    "offline_enabled": true,
+    "permissions": [
+        "unlimitedStorage",
+        "*://localhost/*"
+    ]
+}
